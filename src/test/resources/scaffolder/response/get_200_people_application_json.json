@@ -1,0 +1,21 @@
+[{
+		"role": "genius",
+		"salutation": "Hello Mr. Lennon"
+	},
+	{
+		"role": "music star",
+		"salutation": "Good job sir!"
+	},
+	{
+		"role": "music lover",
+		"salutation": "Good job sir!"
+	},
+	{
+		"role": "music professional",
+		"salutation": "Good job sir!"
+	},
+	{
+		"role": "music entrepreneur",
+		"salutation": "Good job sir!"
+	}
+]

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:beatles-api="http://www.mulesoft.org/schema/mule/beatles-api" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/beatles-api http://www.mulesoft.org/schema/mule/beatles-api/current/mule-beatles-api.xsd">
+	<beatles-api:config name="Beatles_API_Config" doc:name="Beatles API Config" doc:id="42eb3e45-6db9-48cb-972d-06beb5346c0e" property_host="${people.host}" property_port="${people.port}" property_protocol="${people.protocol}"/>
+	<configuration-properties doc:name="Configuration properties" doc:id="23d4fe84-06ba-4621-ba8d-3ea0c32d8649" file="properties.yaml" />
+	<sub-flow name="role-processing" doc:id="0907f2f5-f9f5-46be-a323-25c8f8ecde4e" >
+		<set-variable value="#[[]]" doc:name="roles" doc:id="231df2d1-ed11-44ca-90b5-0a01887a11dd" variableName="roles"/>
+		<foreach doc:name="For Each" doc:id="a4c620c7-83b7-4242-8d58-a1c8ba96900d" collection="#[payload]">
+			<choice doc:name="Choice" doc:id="46bc635a-66ce-4745-b2e2-f6e7d482119f" >
+				<when expression='#[payload.role == "genius"]'>
+					<ee:transform doc:name="payload.role==genius" doc:id="c76eb7e4-3dfc-4311-b8c0-f6db93b2d22b" >
+						<ee:message >
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="roles" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.roles << {"salutation" : "hello Mr Lennon", "name": payload.name}]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+				</when>
+				<otherwise >
+					<ee:transform doc:name="else" doc:id="27dad886-848d-4b3e-8f5f-a35c6a97fc6c" >
+						<ee:message >
+						</ee:message>
+						<ee:variables >
+							<ee:set-variable variableName="roles" ><![CDATA[%dw 2.0
+output application/java
+---
+vars.roles << {"salutation" : "nice work, Sir!", "name": payload.name}]]></ee:set-variable>
+						</ee:variables>
+					</ee:transform>
+				</otherwise>
+			</choice>
+		</foreach>
+	</sub-flow>
+	<flow name="people-impl" doc:id="08a0f288-e179-4cb8-ad3a-7d4fd258b6a8" >
+		<beatles-api:get-peoples doc:name="Get people" doc:id="77587317-6f1c-4417-ace0-cc801229ea12" config-ref="Beatles_API_Config"/>
+		<flow-ref doc:name="role-processing" doc:id="a1708e47-751f-4e1a-84a1-10b42de9f08e" name="role-processing" />
+		<ee:transform doc:name="response" doc:id="10a4e061-d11f-4203-89d0-a8c8cde06c21" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+vars.roles]]></ee:set-payload>
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="outboundHeaders" ><![CDATA[%dw 2.0
+output application/java
+---
+(vars.outboundHeaders default {}) ++{"Content-Type":"application/json"}]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</flow>
+</mule>
