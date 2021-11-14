@@ -27,8 +27,8 @@ jobs:
           java-version: 1.8
       - name: Package with maven
         env:
-          username: ${{ secrets.ANYPOINT_USERNAME }} 
-          password: ${{ secrets.ANYPOINT_PASSWORD }} 
+          username: ${{ secrets.EE_USERNAME }} 
+          password: ${{ secrets.EE_PASSWORD }} 
         run: mvn -B package -s ./settings.xml
       - name: Name artifact as commit hash
         run: |

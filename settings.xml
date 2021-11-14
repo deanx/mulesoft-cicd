@@ -7,8 +7,8 @@
 	<server>
 		<id>MuleRepository</id>
 		<!-- Provided by Support -->
-		<username>${username}</username>
-		<password>${password}</password>
+		<username>${env.username}</username>
+		<password>${env.password}</password>
 	</server>
   </servers>
 
