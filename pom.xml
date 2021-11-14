@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mycompany</groupId>
@@ -13,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<app.runtime>4.4.0-20211026</app.runtime>
+		<app.runtime>4.3.0-20211026</app.runtime>
 		<mule.maven.plugin.version>3.5.2</mule.maven.plugin.version>
 		<munit.version>2.3.6</munit.version>
 	</properties>
@@ -52,6 +54,15 @@
 						<requiredResourceCoverage>50</requiredResourceCoverage>
 						<requiredFlowCoverage>50</requiredFlowCoverage>
 
+						<ignoreFlows>
+							<ignoreFlow>mulesoft-cicd-console</ignoreFlow>
+							<ignoreFlow>mulesoft-cicd-main</ignoreFlow>
+						</ignoreFlows>
+						
+						<ignoreFiles>
+							<ignoreFile>ignored-by-coverage.xml</ignoreFile>
+						</ignoreFiles>
+						
 						<formats>
 							<format>html</format>
 							<format>console</format>

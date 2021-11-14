@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="who-is-the-beatle" doc:id="fc4d369e-b36f-4db0-a028-a3a6733c81b7" >
+		<choice doc:name="Choice" doc:id="50f3e2b0-69b1-4a5a-b4cb-934670fc49e7" >
+			<when expression='#[payload.name == "John Lennon"]'>
+				<set-variable value='"Hey Mr. Lennon. Keep watching the wheels' doc:name="salutation for John Lennon" doc:id="fa9dc8a5-df20-4550-b775-baa33da8099c" variableName="salutation"/>
+			</when>
+			<otherwise >
+				<set-variable value="Hey. Thanks for being a beatle!" doc:name="salutation for other Beatles" doc:id="67e13946-c492-404c-8da9-f423b17d3d07" variableName="salutation"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>
