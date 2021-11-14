@@ -3,6 +3,11 @@ name: build-dev
 on:
   workflow_dispatch:
 	  branches: [master]
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
   push:
     branches:
       - master
