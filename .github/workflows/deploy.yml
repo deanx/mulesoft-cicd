@@ -57,6 +57,9 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@master
       - name: Deploy to CloudHub
+        env:
+          username: ${{ secrets.EE_USERNAME }} 
+          password: ${{ secrets.EE_PASSWORD }} 
         run: |
           artifactName=$(ls *.jar | head -1)
           mvn package deploy -s ./settings.xml -DmuleDeploy -Danypoint.env=Sandbox -Danypoint.appName=mulesoft-cicd-githubactions -Danypoint.username=${{ secrets.ANYPOINT_USERNAME }} -Danypoint.password=${{ secrets.ANYPOINT_PASSWORD }}  -Danypoint.muleVersion=4.3.0 -Danypoint.region=us-west-1 -Danypoint.workers=2
